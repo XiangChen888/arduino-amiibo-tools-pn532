@@ -46,18 +46,17 @@ int main(int argc, char *argv[]) {
 			//uint8_t data [4] = {0xfa, 0xca, 0xac, 0xad}; // Data to write on tag
 			uint8_t read[4];
 			// Buffer for reading data from tag
-			char pagebytes[] = {
+			uint8_t pagebytes[4] = {
 				0, 0, 0, 0
-			}
-			;
+			};
 
-			printf("pagebytes is %s\n",pagebytes );
+			printf("pagebytes is %X\n",pagebytes );
 			// Buffer to store 4 page bytes
-			char pages = 135;
+			uint8_t pages = 135;
 			
-			printf("pages is %s\n",pages );
+			printf("pages is %d\n",pages );
 
-			char dataBlock[] = {
+			uint8_t dataBlock[] = {
 				/*  ^^^ Paste your dump before this line ^^^
 				 *
 				 *  This is an example of how the pasted dump should look like:
@@ -210,24 +209,24 @@ int main(int argc, char *argv[]) {
 				0x80, 0x80, 0x00, 0x00
 			};
 			//printf("dataBlock[] is %s\n",dataBlock[3]);
-			printf("size of dataBlock[] is %s\n",sizeof(dataBlock));
-			for (char uidbyte = 0; uidbyte < 7; uidbyte++) {
-				char actualbyte = uidbyte;
+			printf("size of dataBlock[] is %d\n",sizeof(dataBlock));
+			/*for (uint8_t uidbyte = 0; uidbyte < 7; uidbyte++) {
+				uint8_t actualbyte = uidbyte;
 				if (actualbyte > 2) {
 					actualbyte++;
 				}
-					printf("actualbyte is %s\n",actualbyte);
-					printf("uidbyte is %s\n",uidbyte);
+					printf("actualbyte is %d\n",actualbyte);
+					printf("uidbyte is %d\n",uidbyte);
 				if (dataBlock[actualbyte] != tag_uid[uidbyte]) {
 					printf("actualbyte is %s\n",actualbyte);
 					printf("uidbyte is %s\n",uidbyte);
-					printf("dataBlock[actualbyte] is %s\n",dataBlock[actualbyte]);
-					printf("dtag_uid[uidbyte] is %s\n",tag_uid[uidbyte]);
+					printf("dataBlock[actualbyte] is %02x\n",dataBlock[actualbyte]);
+					printf("dtag_uid[uidbyte] is %02x\n",tag_uid[uidbyte]);
 					printf("UID mismatch!");
 					printf("UID of the tag doesn't match the UID specified in the dump.");
 					break;
 				}
-			}
+			}*/
 
 
 			bool flag_match = true;
@@ -250,11 +249,11 @@ int main(int argc, char *argv[]) {
 				//     break;
 				// }
 				// Write main data
-				for (char page = 3; page < pages; page++) {
+				for (uint8_t page = 3; page < pages; page++) {
 					// Write data to the page
-					printf("Writing data into page %s",page);
+					printf("Writing data into page %d",page);
 					printf(" ... ");
-					for (char pagebyte = 0; pagebyte < 4; pagebyte++) {
+					for (uint8_t pagebyte = 0; pagebyte < 4; pagebyte++) {
 						pagebytes[pagebyte] = dataBlock[(page * 4) + pagebyte];
 					}
 					success = ntag21x_write(tag, page, pagebytes);
