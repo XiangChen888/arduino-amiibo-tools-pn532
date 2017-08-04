@@ -50,9 +50,13 @@ int main(int argc, char *argv[]) {
 				0, 0, 0, 0
 			}
 			;
+
+			printf("pagebytes is %s\n",pagebytes );
 			// Buffer to store 4 page bytes
 			char pages = 135;
 			
+			printf("pages is %s\n",pages );
+
 			char dataBlock[] = {
 				/*  ^^^ Paste your dump before this line ^^^
 				 *
