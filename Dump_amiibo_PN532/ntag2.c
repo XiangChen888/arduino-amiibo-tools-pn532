@@ -50,7 +50,10 @@ int main(int argc, char *argv[]) {
 				0, 0, 0, 0
 			};
 
-			printf("pagebytes is %X\n",pagebytes );
+			printf("pagebytes is %02x",pagebytes[0] );
+			printf("%02x",pagebytes[1] );
+			printf("%02x",pagebytes[2] );
+			printf("%02x\n",pagebytes[3] );
 			// Buffer to store 4 page bytes
 			uint8_t pages = 135;
 			
@@ -255,10 +258,13 @@ int main(int argc, char *argv[]) {
 					printf(" ... ");
 					for (uint8_t pagebyte = 0; pagebyte < 4; pagebyte++) {
 						pagebytes[pagebyte] = dataBlock[(page * 4) + pagebyte];
+						printf("pagebytes is %02x\n",pagebytes[pagebyte]);
 					}
 					success = ntag21x_write(tag, page, pagebytes);
+					
+
 					if (success>=0) {
-						res = ntag21x_fast_read4(tag, page, read);
+						res = ntag21x_read4(tag, page, read);
 						// Reading page from tag (4 bytes), you can also use ntag21x_read4 or ntag21x_read (16 bytes) or ntag21x_fast_read (start_page to end_page)
 						if (res < 0) {
 							printf("Error reading tag\n");
